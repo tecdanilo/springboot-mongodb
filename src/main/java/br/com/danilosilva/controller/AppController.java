@@ -1,12 +1,16 @@
 package br.com.danilosilva.controller;
 
 import br.com.danilosilva.bo.LivroBO;
+import br.com.danilosilva.model.Exemplar;
 import br.com.danilosilva.model.Livro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -21,8 +25,10 @@ public class AppController {
 
     @RequestMapping("/init")
     public void init(){
-        for (int i = 0; i < 100; i ++){
-            livroBO.save(new Livro( new Long(i),"Livro "+1, "editora"));
+        for (int i = 0; i < 10000; i ++){
+            List<Exemplar> exemplars = new ArrayList<>();
+            exemplars.add(new Exemplar(""+Math.random()+ GregorianCalendar.getInstance().getTimeInMillis(), "xy"+i));
+            livroBO.save(new Livro( new Long(i),"Livro "+i, "editora " + (i*Math.random()), exemplars));
         }
     }
 
